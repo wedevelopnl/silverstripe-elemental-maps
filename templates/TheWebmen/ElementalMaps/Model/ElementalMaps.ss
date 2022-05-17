@@ -15,9 +15,12 @@
     <% end_if %>
 </div>
 <script>
+    let count;
+
     function initGoogleMap() {
-        if(!window.google){
-            setTimeout(initGoogleMap, 4500)
+        if(!window.google && count <= 15){
+            count++
+            setTimeout(initGoogleMap, 1000)
         } else {
             var maps = document.getElementsByClassName('google-map');
             var numMaps = maps.length;
