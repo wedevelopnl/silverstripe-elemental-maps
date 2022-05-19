@@ -18,7 +18,7 @@
     let count;
 
     function initGoogleMap() {
-        if(!window.google && count <= 15){
+        if(!google && count <= 15){
             count++
             setTimeout(initGoogleMap, 1000)
         } else {
