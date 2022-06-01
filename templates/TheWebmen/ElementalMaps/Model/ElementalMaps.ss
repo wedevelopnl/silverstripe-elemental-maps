@@ -15,51 +15,51 @@
     <% end_if %>
 </div>
 <script>
-    let count;
-
     function initGoogleMap() {
-        if(!google && count <= 15){
-            count++
-            setTimeout(initGoogleMap, 1000)
-        } else {
-            var maps = document.getElementsByClassName('google-map');
-            var numMaps = maps.length;
-            for(var i = 0; i < numMaps; i++) {
-                var mapElement = maps[i];
-                var markersData = mapElement.querySelector('.map-markers');
+        var maps = document.getElementsByClassName('google-map');
+        var numMaps = maps.length;
+        for(var i = 0; i < numMaps; i++) {
+            var mapElement = maps[i];
+            var markersData = mapElement.querySelector('.map-markers');
+            var map = new google.maps.Map(mapElement, {
+                center: {
+                    lat: parseFloat(mapElement.dataset.latitude),
+                    lng: parseFloat(mapElement.dataset.longitude)
+                },
+                zoom: parseFloat(mapElement.dataset.zoom),
+                mapTypeId: mapElement.dataset.type
+            });
 
-                var map = new google.maps.Map(mapElement, {
-                    center: {
-                        lat: parseFloat(mapElement.dataset.latitude),
-                        lng: parseFloat(mapElement.dataset.longitude)
-                    },
-                    zoom: parseFloat(mapElement.dataset.zoom),
-                    mapTypeId: mapElement.dataset.type
-                });
-
-                if(markersData){
-                    markersData = JSON.parse(markersData.textContent);
-                    var numMarkers = markersData.length;
-                    for(var j = 0; j < numMarkers; j++){
-                        var marker = new google.maps.Marker({
-                            position: {
-                                lat: parseFloat(markersData[j].latitude),
-                                lng: parseFloat(markersData[j].longitude)
-                            },
-                            map: map,
-                            title: markersData[j].title,
-                            allData: markersData[j]
-                        });
-                        marker.addListener('click', function(e) {
-                            if(this.allData.link){
-                                window.location = this.allData.link;
-                            }
-                        });
-                    }
+            if(markersData){
+                markersData = JSON.parse(markersData.textContent);
+                var numMarkers = markersData.length;
+                for(var j = 0; j < numMarkers; j++){
+                    var marker = new google.maps.Marker({
+                        position: {
+                            lat: parseFloat(markersData[j].latitude),
+                            lng: parseFloat(markersData[j].longitude)
+                        },
+                        map: map,
+                        title: markersData[j].title,
+                        allData: markersData[j]
+                    });
+                    marker.addListener('click', function(e) {
+                        if(this.allData.link){
+                            window.location = this.allData.link;
+                        }
+                    });
                 }
             }
         }
     }
-    initGoogleMap()
-    google.maps.event.addDomListener(window, 'load', initGoogleMap);
+
+    function waitForGoogle() {
+        if (window.google) {
+            initGoogleMap();
+        } else {
+            setTimeout(waitForGoogle.bind(this), 550);
+        }
+    }
+
+    waitForGoogle();
 </script>
