@@ -14,5 +14,6 @@ TheWebmen\ElementalMaps\Model\ElementalMaps:
 ## Upgrading from v1.x to v2.x
 
 In v2.x `sheadawson/silverstripe-linkable` is replaced by `gorriecoe/silverstripe-linkfield`.
-
 When upgrading, you need to be aware of the fact that the links needs to get migrated.
+
+You may can use https://github.com/dynamic/silverstripe-link-migrator (as refer) to do this migration .
