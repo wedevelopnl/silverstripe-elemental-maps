@@ -2,8 +2,8 @@
 
 namespace TheWebmen\ElementalMaps\Model;
 
-use Sheadawson\Linkable\Forms\LinkField;
-use Sheadawson\Linkable\Models\Link;
+use gorriecoe\LinkField\LinkField;
+use gorriecoe\Link\Models\Link;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObject;
 use TheWebmen\Addressfield\Forms\GooglePlacesField;
@@ -41,7 +41,7 @@ class ElementalMapsMarker extends DataObject
         $googlePlacesField->setLatitudeField('Latitude');
         $googlePlacesField->setLongitudeField('Longitude');
 
-        $fields->addFieldToTab('Root.Main', new LinkField('LinkID'));
+        $fields->addFieldToTab('Root.Main', new LinkField('Link', 'Link', $this));
 
         return $fields;
     }
