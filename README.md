@@ -11,6 +11,16 @@ Add the Google Maps API key:
 TheWebmen\ElementalMaps\Model\ElementalMaps:
   maps_api_key: 'API_KEY'
 ```
+or via an environment file
+```env
+ELEMENTAL_MAPS__MAPS_API_KEY=.....
+```
+or hint to the env key from the yml
+```yml
+TheWebmen\ElementalMaps\Model\ElementalMaps:
+  maps_api_key: '`ENV_KEY_FOR_API_KEY`'
+```
+
 ## Upgrading from v1.x to v2.x
 
 In v2.x `sheadawson/silverstripe-linkable` is replaced by `gorriecoe/silverstripe-linkfield`.
