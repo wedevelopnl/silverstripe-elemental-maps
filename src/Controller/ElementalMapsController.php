@@ -10,6 +10,8 @@ use SilverStripe\Core\Environment;
 
 class ElementalMapsController extends ElementController
 {
+    const DEFAULT_ENV_KEY = 'ELEMENTAL_MAPS__MAPS_API_KEY';
+
     public function init()
     {
         parent::init();
@@ -17,20 +19,22 @@ class ElementalMapsController extends ElementController
         $config = Config::forClass(ElementalMaps::class);
         $key = $config->get('maps_api_key');
 
-        if (empty($key)) {
-            throw new \InvalidArgumentException("maps_api_key is empty", 1);
+        if (empty($key) && !Environment::getEnv($envKey ?? self::DEFAULT_ENV_KEY)) {
+            throw new \InvalidArgumentException("Maps API Key not defined in either yml or .env.", 1);
         }
 
-        /* Check for default SilverStripe behaviour (set env var ref in yml) */
         if ($key[0] === '`' && $key[strlen($key) - 1] === '`') {
             $envKey = trim($key, '`');
-            $key = Environment::getEnv($envKey);
+        }
+
+        if(empty($key) && Environment::getEnv($envKey ?? self::DEFAULT_ENV_KEY)) {
+            $key = Environment::getEnv($envKey ?? self::DEFAULT_ENV_KEY);
 
             if (is_null($key) || empty($key)) {
                 throw new \InvalidArgumentException("maps_api_key starts with '`' indicating an environment file reference. But Environment variable '$envKey' empty or non existant.", 1);
             }
         }
 
-        Requirements::javascript('https://maps.googleapis.com/maps/api/js?key=' . $config->get('maps_api_key'));
+        Requirements::javascript('https://maps.googleapis.com/maps/api/js?key=' . $key);
     }
 }
