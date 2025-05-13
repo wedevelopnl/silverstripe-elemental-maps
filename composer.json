@@ -18,7 +18,7 @@
     "require": {
         "silverstripe/cms": "^5.0@dev",
         "silverstripe/vendor-plugin": "^2.0",
-        "wedevelopnl/silverstripe-addressfield": "dev-main",
+        "wedevelopnl/silverstripe-addressfield": "dev-upgrade/ss-5",
         "gorriecoe/silverstripe-linkfield": "^1.0"
     },
     "require-dev": {
